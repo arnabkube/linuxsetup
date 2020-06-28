@@ -1,0 +1,51 @@
+
+#!/bin/bash
+echo 'Updating system'
+yum update -y
+echo ' Installing telnet.....'
+yum install -y telnet
+yum install -y git-all
+yum install gcc openssl-devel bzip2-devel libffi-devel -y
+mkdir installdirectory
+cd installdirectory/
+sleep 2
+echo " "
+echo " Installing Python3.8.3"
+wget https://www.python.org/ftp/python/3.8.3/Python-3.8.3.tgz
+if [ $? -eq 0 ]; then
+   echo 'wget OK'
+else
+   echo 'wget FAIL'
+fi
+
+echo""
+echo "download complete"
+echo ""
+echo " ....................Untaring"
+sleep 2
+tar xzf Python-3.8.3.tgz
+cd Python-3.8.3
+echo " "
+echo " .... configuring"
+echo " "
+sleep 2
+./configure --enable-optimizations
+echo " "
+echo " making in progress "
+sudo make altinstall
+if [ $? -eq 0 ]; then
+   echo 'make OK'
+else
+   echo 'make FAIL'
+fi
+echo " "
+
+rm -rf Python-3.8.3.tgz
+ln -s /usr/local/bin/python3.8 /bin/python3
+python3 --version
+ln -s /usr/local/bin/pip3.8 /bin/pip3
+pip3 install boto3
+
+
+
+"linux_setup.sh" 47L, 876C                                                                                                              23,1          Bot
